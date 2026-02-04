@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # 1. Reverse Proxy & UI
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - aegis-net
+
+  # 2. Application API
+  backend:
+    build: 
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://db:27017
+    depends_on:
+      - db
+    networks:
+      - aegis-net
+
+  # 3. Database
+  db:
+    image: mongo:6.0
+    ports:
+      - "27017:27017" # Exposed for local debugging tools
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - aegis-net
+
+networks:
+  aegis-net:
+    driver: bridge
+
+volumes:
+  mongo-data:

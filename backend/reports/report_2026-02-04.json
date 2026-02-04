@@ -1,0 +1,91 @@
+{
+  "metadata": {
+    "report_id": "RPT-20260204",
+    "generated_at": "2026-02-04T14:10:16.833095",
+    "target_date": "2026-02-04"
+  },
+  "summary": {
+    "total_incidents": 12,
+    "severity_distribution": {
+      "Critical": 9,
+      "Medium": 3
+    },
+    "top_attack_vectors": {
+      "DDoS": 5,
+      "Brute Force": 4,
+      "Port Scan": 3
+    },
+    "top_offenders": {
+      "45.33.11.48": 1,
+      "45.33.17.35": 1,
+      "45.33.11.47": 1,
+      "45.33.14.31": 1,
+      "45.33.13.4": 1
+    }
+  },
+  "critical_threats": [
+    {
+      "id": "7b48910a-b638-4c16-bf59-a6e3b884609d",
+      "timestamp": "2026-02-04 10:21:09",
+      "src_ip": "45.33.11.48",
+      "risk_score": 95.0,
+      "type": "DDoS"
+    },
+    {
+      "id": "c720bcac-d365-4d1b-92bb-c815429c4d94",
+      "timestamp": "2026-02-04 10:21:09",
+      "src_ip": "45.33.11.47",
+      "risk_score": 85.0,
+      "type": "Brute Force"
+    },
+    {
+      "id": "8959a23d-bf37-429d-b34c-aa4bdfaebd61",
+      "timestamp": "2026-02-04 10:21:09",
+      "src_ip": "45.33.13.4",
+      "risk_score": 95.0,
+      "type": "DDoS"
+    },
+    {
+      "id": "fffe1478-f0b1-4f1d-9998-12b38aa5e4ee",
+      "timestamp": "2026-02-04 10:21:08",
+      "src_ip": "45.33.12.40",
+      "risk_score": 95.0,
+      "type": "DDoS"
+    },
+    {
+      "id": "e65f5366-63be-482d-be23-97d799829c33",
+      "timestamp": "2026-02-04 10:21:08",
+      "src_ip": "45.33.11.18",
+      "risk_score": 85.0,
+      "type": "Brute Force"
+    },
+    {
+      "id": "adec38cd-486a-4866-a2f7-ec2017dd8268",
+      "timestamp": "2026-02-04 10:21:08",
+      "src_ip": "45.33.15.29",
+      "risk_score": 85.0,
+      "type": "Brute Force"
+    },
+    {
+      "id": "7e2ffc98-5622-4d9c-a4fe-386674d16d19",
+      "timestamp": "2026-02-04 10:21:08",
+      "src_ip": "45.33.10.12",
+      "risk_score": 85.0,
+      "type": "Brute Force"
+    },
+    {
+      "id": "e53e470d-f2bc-4497-95e7-b14019b6d39e",
+      "timestamp": "2026-02-04 10:21:08",
+      "src_ip": "45.33.17.39",
+      "risk_score": 94.05,
+      "type": "DDoS"
+    },
+    {
+      "id": "f5c9d318-f239-404f-a491-0e2b0cea03b8",
+      "timestamp": "2026-02-04 10:21:07",
+      "src_ip": "45.33.17.34",
+      "risk_score": 95.0,
+      "type": "DDoS"
+    }
+  ]
+}

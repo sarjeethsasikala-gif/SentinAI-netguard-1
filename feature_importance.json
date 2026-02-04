@@ -1,0 +1,22 @@
+[
+  {
+    "name": "packet_size",
+    "importance": 0.4278098042193597
+  },
+  {
+    "name": "total_l_fwd_packets",
+    "importance": 0.40421447551650674
+  },
+  {
+    "name": "dest_port",
+    "importance": 0.16797572026413346
+  },
+  {
+    "name": "flow_duration",
+    "importance": 0.0
+  },
+  {
+    "name": "total_fwd_packets",
+    "importance": 0.0
+  }
+]

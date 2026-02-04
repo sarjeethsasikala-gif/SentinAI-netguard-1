@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pandas
+scikit-learn
+pymongo
+python-dotenv
+imbalanced-learn
+pytest
+httpx
+pytest-asyncio
+passlib[bcrypt]
+pyjwt
+python-multipart
