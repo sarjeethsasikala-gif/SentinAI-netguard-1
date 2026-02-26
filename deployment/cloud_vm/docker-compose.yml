@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  log-generator:
+    build:
+      context: ../../
+      dockerfile: backend/Dockerfile
+    container_name: sentinai-log-generator
+    command: python -m backend.run_generator_standalone
+    environment:
+      # Target ML VM API
+      - DETECTOR_API_URL=http://192.168.56.30:8000/api/telemetry
+      - PUSH_INTERVAL=2.0
+      - BURST_SIZE=50
+    restart: always
+    networks:
+      - cloud-net
+
+networks:
+  cloud-net:
+    driver: bridge

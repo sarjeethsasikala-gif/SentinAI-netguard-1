@@ -1,22 +1,34 @@
 [
   {
-    "name": "packet_size",
-    "importance": 0.43193448582011734
-  },
-  {
     "name": "total_l_fwd_packets",
-    "importance": 0.4069233437621944
+    "value": 0.41443323447332087
   },
   {
     "name": "dest_port",
-    "importance": 0.16114217041768825
+    "value": 0.30026760096857824
+  },
+  {
+    "name": "packet_size",
+    "value": 0.27792243052278126
+  },
+  {
+    "name": "country_code",
+    "value": 0.004473243723422039
+  },
+  {
+    "name": "protocol_num",
+    "value": 0.0029034903118976005
   },
   {
     "name": "flow_duration",
-    "importance": 0.0
+    "value": 0.0
   },
   {
     "name": "total_fwd_packets",
-    "importance": 0.0
+    "value": 0.0
+  },
+  {
+    "name": "chaos_factor",
+    "value": 0.0
   }
 ]

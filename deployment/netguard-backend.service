@@ -1,0 +1,26 @@
+[Unit]
+Description=SentinAI NetGuard Backend Service
+After=network.target mongodb.service
+
+[Service]
+# User/Group - change these to your actual user on OCI
+User=ubuntu
+Group=ubuntu
+
+# Working Directory
+WorkingDirectory=/home/ubuntu/SentinAI-netguard
+
+# Environment
+Environment="PATH=/home/ubuntu/SentinAI-netguard/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONPATH=/home/ubuntu/SentinAI-netguard"
+EnvironmentFile=/home/ubuntu/SentinAI-netguard/.env
+
+# Command
+ExecStart=/home/ubuntu/SentinAI-netguard/venv/bin/uvicorn backend.api_gateway:app --host 0.0.0.0 --port 8000
+
+# Restart policy
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

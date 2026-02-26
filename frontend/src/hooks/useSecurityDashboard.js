@@ -7,9 +7,7 @@
  * License: MIT / Academic Use Only
  */
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-
-const API_BASE = 'http://localhost:8000/api';
+import api from '../api/axiosConfig';
 
 export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
     // State Containers for Telemetry Data
@@ -28,11 +26,12 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
 
     // Polling Reference to detect new telemetry events
     const lastThreatTimestamp = useRef(null);
+    const isMounted = useRef(true);
 
     const synchronizeTelemetry = async () => {
         try {
             // Fetch Aggregated Dashboard Summary
-            const res = await axios.get(`${API_BASE}/dashboard/summary`);
+            const res = await api.get(`/dashboard/summary`);
             const telemetryPayload = res.data;
 
             // Safe Destructuring with Defaults
@@ -45,6 +44,8 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
                 attack_types = [],
                 critical_alerts = []
             } = telemetryPayload || {};
+
+            if (!isMounted.current) return;
 
             setThreats(threats);
             setRiskStats(risk_summary);
@@ -59,7 +60,7 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
                 const start = `${dateFilter} 00:00:00`;
                 const end = `${dateFilter} 23:59:59`;
                 try {
-                    const filteredRes = await axios.get(`${API_BASE}/threats`, {
+                    const filteredRes = await api.get(`/threats`, {
                         params: { start_time: start, end_time: end }
                     });
                     const filteredThreats = filteredRes.data;
@@ -78,7 +79,7 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
                         else riskCounts.Low++;
 
                         // Type
-                        const label = t.predicted_label;
+                        const label = t.predicted_label || t.label || 'Unknown';
                         typeCounts[label] = (typeCounts[label] || 0) + 1;
                     });
 
@@ -86,31 +87,22 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
                     setAttackTypes(Object.keys(typeCounts).map(k => ({ name: k, value: typeCounts[k] })));
                     setCriticalAlerts(filteredThreats.filter(t => t.risk_score >= 80));
 
+                    // Update High Risk Count for filtered view
+                    setHighRiskCount(riskCounts.Critical + riskCounts.High);
+
                 } catch (e) {
                     console.error("Filtered fetch failed", e);
                     const msg = e.response?.data?.detail || e.message;
                     setAlert({ type: 'error', message: `Filter failed: ${msg}` });
                 }
+            } else {
+                // Calculate aggregated risk metric (Global)
+                const critical = risk_summary.find(s => s.name === 'Critical')?.value || 0;
+                const high = risk_summary.find(s => s.name === 'High')?.value || 0;
+                setHighRiskCount(critical + high);
             }
 
-            // Calculate aggregated risk metric
-            const critical = risk_summary.find(s => s.name === 'Critical')?.value || 0;
-            const high = risk_summary.find(s => s.name === 'High')?.value || 0;
-            setHighRiskCount(critical + high);
 
-            // Real-time Alert Trigger Logic
-            if (threats.length > 0) {
-                const latestEvent = threats[0];
-                if (latestEvent.timestamp !== lastThreatTimestamp.current) {
-                    lastThreatTimestamp.current = latestEvent.timestamp;
-                    if (latestEvent.risk_score >= 80) {
-                        setAlert({
-                            type: 'critical',
-                            message: `Critical Anomaly Detected: ${latestEvent.predicted_label} from Source ${latestEvent.source_ip}`
-                        });
-                    }
-                }
-            }
 
             setLoading(false);
         } catch (error) {
@@ -123,7 +115,7 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
 
     const resolveThreat = async (id) => {
         try {
-            await axios.post(`${API_BASE}/threats/${id}/resolve`);
+            await api.post(`/threats/${id}/resolve`);
             // Optimistic update
             setThreats(prev => prev.map(t => t.id === id ? { ...t, status: 'Resolved' } : t));
             setCriticalAlerts(prev => prev.filter(t => t.id !== id));
@@ -136,7 +128,7 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
 
     const blockIP = async (id, ip) => {
         try {
-            await axios.post(`${API_BASE}/threats/${id}/block`);
+            await api.post(`/threats/${id}/block`);
             setAlert({ type: 'success', message: `IP ${ip} blocked successfully.` });
         } catch (err) {
             setAlert({ type: 'error', message: 'Block action failed.' });
@@ -149,8 +141,11 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
         synchronizeTelemetry();
 
         // --- WebSocket Integration (Real-Time Push) ---
-        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = `${wsProtocol}//localhost:8000/ws/dashboard`;
+        // Dynamically determine WebSocket URL based on current window location
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.host; // includes port
+        const wsUrl = `${protocol}//${host}/ws/dashboard`;
+
         const socket = new WebSocket(wsUrl);
 
         socket.onopen = () => {
@@ -182,6 +177,11 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
                         if (idx >= 0) newStats[idx].value++;
                         return newStats;
                     });
+
+                    // 4. Update Header Metrics
+                    if (threat.risk_score >= 60) {
+                        setHighRiskCount(prev => prev + 1);
+                    }
                 }
             } catch (err) {
                 console.error("WS Message Error", err);
@@ -192,18 +192,40 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
             console.log("[Dashboard] WebSocket Disconnected. Polling will take over.");
         };
 
-        // Fallback Polling (Keep existing logic for robustness)
-        const interval = setInterval(() => {
-            if (document.visibilityState === 'visible' && socket.readyState !== WebSocket.OPEN) {
-                synchronizeTelemetry();
-            }
-        }, 5000);
-
         return () => {
-            clearInterval(interval);
+            isMounted.current = false;
             socket.close();
         };
     }, [isAuthenticated, dateFilter]);
+
+    const [storageMode, setStorageMode] = useState('local');
+
+    const fetchSystemMode = async () => {
+        try {
+            const res = await api.get(`/system/mode`);
+            setStorageMode(res.data.mode);
+        } catch (e) {
+            console.error("Failed to fetch system mode", e);
+        }
+    };
+
+    const toggleStorageMode = async () => {
+        const newMode = storageMode === 'cloud' ? 'local' : 'cloud';
+        try {
+            const res = await api.post(`/system/mode`, { mode: newMode });
+            setStorageMode(res.data.mode);
+            setAlert({ type: 'success', message: `Switched to ${newMode === 'cloud' ? 'Cloud' : 'Local'} Storage` });
+            // Refresh data from new source
+            synchronizeTelemetry();
+        } catch (e) {
+            const msg = e.response?.data?.detail || "Switch failed";
+            setAlert({ type: 'error', message: msg });
+        }
+    };
+
+    useEffect(() => {
+        fetchSystemMode();
+    }, []);
 
     return {
         threats,
@@ -219,7 +241,9 @@ export const useSecurityDashboard = (isAuthenticated, dateFilter = null) => {
         setAlert, // Export setter for clearing toasts
         actions: {
             resolveThreat,
-            blockIP
+            blockIP,
+            toggleStorageMode,
+            storageMode
         }
     };
 };

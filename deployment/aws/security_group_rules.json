@@ -1,0 +1,14 @@
+[
+  {
+    "IpProtocol": "tcp",
+    "FromPort": 22,
+    "ToPort": 22,
+    "IpRanges": [
+      {
+        "CidrIp": "YOUR.IP.ADDRESS.HERE/32",
+        "Description": "SSH Admin Access ONLY"
+      }
+    ],
+    "Ipv6Ranges": []
+  }
+]

@@ -27,6 +27,24 @@ const DashboardHeader = ({ theme, userRole, criticalAlerts, actions, children })
                     <span>System Active</span>
                 </div>
 
+                <div className="mode-toggle" onClick={actions.toggleStorageMode} style={{
+                    cursor: 'pointer',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    border: '1px solid var(--border)',
+                    fontSize: '0.8rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: actions.storageMode === 'cloud' ? 'rgba(9, 105, 218, 0.1)' : 'rgba(255, 171, 0, 0.1)'
+                }}>
+                    <div style={{
+                        width: 8, height: 8, borderRadius: '50%',
+                        background: actions.storageMode === 'cloud' ? 'var(--primary)' : 'orange'
+                    }}></div>
+                    <span>{actions.storageMode === 'cloud' ? 'Cloud DB' : 'Local DB'}</span>
+                </div>
+
                 <div style={{ width: '1px', height: '24px', background: 'var(--border)', margin: '0 5px' }}></div>
 
                 <button onClick={actions.openPasswordModal} className="action-btn" title="Change Password" style={{ color: 'var(--text-secondary)', borderColor: 'var(--border)' }}>

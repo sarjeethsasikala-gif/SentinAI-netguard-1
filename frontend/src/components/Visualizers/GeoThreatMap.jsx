@@ -1,27 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleLinear } from 'd3-scale';
-import axios from 'axios';
 import { Globe } from 'lucide-react';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-const ThreatMap = ({ theme }) => {
-    const [data, setData] = useState([]);
+const ThreatMap = ({ theme, threats = [] }) => {
+    // Aggregation: Count threats by country
+    // Aggregation: Count threats by country
+    const data = React.useMemo(() => {
+        const counts = {};
+        threats.forEach(t => {
+            const country = t.source_country || 'UNK';
+            counts[country] = (counts[country] || 0) + 1;
+        });
+        return Object.keys(counts).map(k => ({ id: k, value: counts[k] }));
+    }, [threats]);
+    // ISO Alpha-3 to Numeric Mapping for world-atlas
+    const isoMap = {
+        "USA": "840", "CHN": "156", "RUS": "643", "BRA": "076",
+        "IND": "356", "DEU": "276", "GBR": "826", "FRA": "250",
+        "JPN": "392", "KOR": "410", "CAN": "124", "AUS": "036"
+    };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/api/stats/geo');
-                setData(res.data);
-            } catch (err) {
-                console.error("Error loading geo stats", err);
-            }
-        };
-        fetchData();
-    }, []);
-
-    const maxValue = Math.max(...data.map(d => d.value), 10); // Standardize scale
+    const maxValue = Math.max(...data.map(d => d.value), 1); // Ensure min is 1 to avoid NaN domain if empty
 
     // Theme Colors
     const isDark = theme === 'dark';
@@ -29,6 +31,9 @@ const ThreatMap = ({ theme }) => {
     const hoverColor = isDark ? "#38BDF8" : "#0969DA";
     const strokeColor = isDark ? "#30363D" : "#d1d5db";
     const emptyColor = isDark ? "#161b22" : "#f3f4f6";
+
+    // Debugging: Log data to see if we have matches
+    // console.log("Geo Data:", data);
 
     const colorScale = scaleLinear()
         .domain([0, maxValue])
@@ -46,7 +51,11 @@ const ThreatMap = ({ theme }) => {
                     <Geographies geography={geoUrl}>
                         {({ geographies }) =>
                             geographies.map((geo) => {
-                                const d = data.find((s) => s.id === geo.id || s.id === geo.properties.ISO_A3);
+                                // Match by Numeric Code (geo.id) or try mapped Alpha-3
+                                const d = data.find((s) => {
+                                    const mappedId = isoMap[s.id] || s.id;
+                                    return mappedId === geo.id;
+                                });
                                 return (
                                     <Geography
                                         key={geo.rsmKey}

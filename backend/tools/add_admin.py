@@ -7,8 +7,8 @@ from pymongo import MongoClient
 # Load env vars
 load_dotenv()
 
-# Add project root to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add project root to path (Up 2 levels from backend/tools)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from backend.services.auth_service import auth_service
 from backend.core.config import config

@@ -1,6 +1,25 @@
-import { ShieldAlert, Flame, Eye } from 'lucide-react'
+import { useState } from 'react'
+import { ShieldAlert, Flame, Eye, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const ThreatTable = ({ data, filters, setFilters, onRowAction, userRole }) => {
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    // Reset to page 1 when filters change
+    // Note: We'd need a useEffect for this if filters prop changes independently, 
+    // but React schedules batch updates so simply resetting on render or useEffect is fine.
+    // For simplicity, let's just calc totals.
+
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
 
     const getRiskColor = (score) => {
         if (score >= 80) return 'text-red-500'
@@ -16,14 +35,14 @@ const ThreatTable = ({ data, filters, setFilters, onRowAction, userRole }) => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
                 <h2><ShieldAlert size={20} /> Threat Drill-Down</h2>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                    <select className="filter-select" value={filters.type} onChange={e => setFilters.setType(e.target.value)}>
+                    <select className="filter-select" value={filters.type} onChange={e => { setFilters.setType(e.target.value); setCurrentPage(1); }}>
                         <option value="All">All Types</option>
                         <option value="DDoS">DDoS</option>
                         <option value="Brute Force">Brute Force</option>
                         <option value="Port Scan">Port Scan</option>
                         <option value="Normal">Normal</option>
                     </select>
-                    <select className="filter-select" value={filters.risk} onChange={e => setFilters.setRisk(e.target.value)}>
+                    <select className="filter-select" value={filters.risk} onChange={e => { setFilters.setRisk(e.target.value); setCurrentPage(1); }}>
                         <option value="All">All Risks</option>
                         <option value="Critical">Critical</option>
                         <option value="High">High</option>
@@ -48,7 +67,7 @@ const ThreatTable = ({ data, filters, setFilters, onRowAction, userRole }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((t, i) => (
+                        {currentData.map((t, i) => (
                             <tr key={i} className={getRowClass(t.risk_score)}>
                                 <td>
                                     <span style={{
@@ -99,9 +118,55 @@ const ThreatTable = ({ data, filters, setFilters, onRowAction, userRole }) => {
                         {data.length === 0 && (
                             <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>No threats match filters...</td></tr>
                         )}
+                        {currentData.length === 0 && data.length > 0 && (
+                            <tr><td colSpan="8" style={{ textAlign: 'center', padding: '20px' }}>Page is empty...</td></tr>
+                        )}
                     </tbody>
                 </table>
             </div>
+
+            {/* Pagination Controls */}
+            {data.length > itemsPerPage && (
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    padding: '10px 0',
+                    gap: '15px',
+                    marginTop: '10px',
+                    borderTop: '1px solid var(--border)'
+                }}>
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <div style={{ display: 'flex', gap: '5px' }}>
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="action-btn"
+                            style={{
+                                padding: '5px 10px',
+                                opacity: currentPage === 1 ? 0.5 : 1,
+                                cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
+                            }}
+                        >
+                            <ChevronLeft size={16} /> Prev
+                        </button>
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="action-btn"
+                            style={{
+                                padding: '5px 10px',
+                                opacity: currentPage === totalPages ? 0.5 : 1,
+                                cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
+                            }}
+                        >
+                            Next <ChevronRight size={16} />
+                        </button>
+                    </div>
+                </div>
+            )}
         </section>
     )
 }

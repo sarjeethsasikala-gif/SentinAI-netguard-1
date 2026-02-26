@@ -52,8 +52,11 @@ class ReportingService:
         severity_counts = Counter()
         attack_vectors = Counter()
         source_ips = Counter()
+        target_ips = Counter() # New: Affected Assets
+        status_counts = Counter() # New: Resolution Status
         
         high_risk_events = []
+        detailed_log = [] # New: Full Audit Trail
 
         for event in events:
             # Severity
@@ -65,19 +68,32 @@ class ReportingService:
             vector = event.get('predicted_label', 'Unknown')
             attack_vectors[vector] += 1
             
-            # Source IP
+            # Source & Target
             src = event.get('source_ip', 'Unknown')
+            dst = event.get('destination_ip', 'Unknown')
             source_ips[src] += 1
+            target_ips[dst] += 1
             
+            # Status
+            status = event.get('status', 'Active')
+            status_counts[status] += 1
+            
+            # Detailed Entry
+            log_entry = {
+                "id": event.get('id'),
+                "timestamp": event.get('timestamp'),
+                "type": vector,
+                "source": src,
+                "target": dst,
+                "status": status,
+                "risk_score": score,
+                "severity": severity
+            }
+            detailed_log.append(log_entry)
+
             # Collect Criticals
             if score >= 80:
-                high_risk_events.append({
-                    "id": event.get('id'),
-                    "timestamp": event.get('timestamp'),
-                    "src_ip": src,
-                    "risk_score": score,
-                    "type": vector
-                })
+                high_risk_events.append(log_entry)
 
         # 3. Construct Report
         report = {
@@ -88,11 +104,15 @@ class ReportingService:
             },
             "summary": {
                 "total_incidents": total_count,
+                "resolved_incidents": status_counts.get('Resolved', 0),
+                "active_incidents": status_counts.get('Active', 0),
                 "severity_distribution": dict(severity_counts),
                 "top_attack_vectors": dict(attack_vectors.most_common(5)),
-                "top_offenders": dict(source_ips.most_common(5))
+                "top_offenders": dict(source_ips.most_common(5)),
+                "top_targets": dict(target_ips.most_common(5)) # New: Affected Victims
             },
-            "critical_threats": high_risk_events[:10]  # Top 10 criticals
+            "critical_threats": high_risk_events,
+            "detailed_log": detailed_log # New: Full List
         }
 
         # 4. Persist

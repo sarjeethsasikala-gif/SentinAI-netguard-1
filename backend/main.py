@@ -13,7 +13,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import the app to expose it to uvicorn if run as 'main:app'
 from backend.api_gateway import app
+from backend.core.config import config
 
 if __name__ == "__main__":
     # Launch Uvicorn
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
+    # Reload should only be True in DEBUG mode
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=config.DEBUG)

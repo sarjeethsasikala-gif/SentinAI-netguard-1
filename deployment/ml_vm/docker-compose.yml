@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ../../
+      dockerfile: backend/Dockerfile
+    container_name: sentinai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://db:27017
+      # Allow Frontend VM IP for CORS
+      - ALLOWED_ORIGINS=http://192.168.56.40,http://localhost:3000
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - ml-net
+
+  db:
+    image: mongo:6.0
+    container_name: sentinai-db
+    ports:
+      - "27017:27017" # Exposed for local debugging tools & resilience checks
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+    networks:
+      - ml-net
+
+networks:
+  ml-net:
+    driver: bridge
+
+volumes:
+  mongo-data:

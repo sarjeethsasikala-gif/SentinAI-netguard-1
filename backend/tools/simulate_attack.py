@@ -15,6 +15,7 @@ import argparse
 import sys
 import os
 import time
+import requests
 
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -30,10 +31,10 @@ def main():
 
     # Map CLI arg to Internal Category
     category_map = {
-        'ddos': TrafficCategory.DDOS,
-        'brute_force': TrafficCategory.BRUTE_FORCE,
-        'port_scan': TrafficCategory.PORT_SCAN,
-        'normal': TrafficCategory.NORMAL
+        'ddos': TrafficCategory.VOLUMETRIC_DDOS,
+        'brute_force': TrafficCategory.AUTH_BRUTE_FORCE,
+        'port_scan': TrafficCategory.RECON_SCAN,
+        'normal': TrafficCategory.BENIGN
     }
     
     target_category = category_map[args.type]
@@ -66,7 +67,10 @@ def main():
         
         raw_frame = pd.DataFrame([{
             'dest_port': telemetry['dest_port'],
-            'packet_size': telemetry['packet_size']
+            'packet_size': telemetry['packet_size'],
+            'protocol': telemetry.get('protocol', 'TCP'),
+            'source_country': telemetry.get('source_country', 'UNK'),
+            'metadata': telemetry.get('metadata', {})
         }])
         input_vector = TrafficClassifier.vectorize_payload(raw_frame)
         
@@ -87,7 +91,7 @@ def main():
                 "id": str(uuid.uuid4()),
                 "timestamp": telemetry['timestamp'],
                 "source_ip": telemetry['source_ip'],
-                "destination_ip": telemetry['dest_ip'],
+                "destination_ip": telemetry['destination_ip'],
                 "destination_port": telemetry['dest_port'],
                 "protocol": telemetry['protocol'],
                 "packet_size": telemetry['packet_size'],
@@ -104,6 +108,17 @@ def main():
             
             if prediction == target_category:
                 detected_count += 1
+            
+            # --- NOTIFICATION HOOK ---
+            # payload matches what the frontend expects (type + data)
+            payload = {
+                "type": "THREAT_DETECTED",
+                "data": incident
+            }
+            try:
+                requests.post("http://127.0.0.1:8000/api/internal/notify", json=payload)
+            except Exception as e:
+                print(f"  [Simulator] FAILED to send notification: {e}")
             
             time.sleep(0.05) # Rate limit slightly for visual effect
 

@@ -4,15 +4,23 @@ import glob
 import os
 import joblib
 import zipfile
+import json
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score
 from imblearn.over_sampling import SMOTE
 
 # Configuration
-DATA_DIR = "../Training data"
-MODEL_PATH = "model_real.pkl"
-# SAMPLE_SIZE_PER_FILE = 50000  # REMOVED: utilizing all data
+# Run from backend/tools/
+# Data is in root/Training data (../../Training data)
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "Training data")
+
+# Save artifacts to backend/ (../)
+BACKEND_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BACKEND_DIR, "model_real.pkl")
+METRICS_PATH = os.path.join(BACKEND_DIR, "model_metrics.json")
+FEATURES_PATH = os.path.join(BACKEND_DIR, "feature_importance.json")
+FEATURE_NAMES_PATH = os.path.join(BACKEND_DIR, "model_features.json")
 
 def load_and_process_data():
     print("Generating synthetic training data...")
@@ -23,11 +31,10 @@ def load_and_process_data():
         'dest_port': np.random.randint(80, 443, n_normal),
         'flow_duration': [0] * n_normal,
         'total_fwd_packets': [1] * n_normal,
-        'total_l_fwd_packets': np.random.randint(50, 1500, n_normal), # Placeholder logic, will be overwritten by packet_size logic
+        'total_l_fwd_packets': np.random.randint(50, 1500, n_normal), 
         'packet_size': np.random.randint(50, 1500, n_normal),
         'label_mapped': ['Normal'] * n_normal
     }
-    # Sync total_l_fwd_packets (Total Length) with packet_size for consistency
     normal_data['total_l_fwd_packets'] = normal_data['packet_size']
     
     # Generate DDoS Traffic (Aligned with Log Generator)
@@ -53,7 +60,7 @@ def load_and_process_data():
         'label_mapped': ['Port Scan'] * n_scan
     }
     
-    # Generate Brute Force Traffic (New)
+    # Generate Brute Force Traffic 
     n_bf = 500
     bf_data = {
         'dest_port': np.random.choice([22, 3389, 5432], n_bf),
@@ -88,20 +95,16 @@ def train():
     X = df[feature_cols]
     y = df['label_mapped']
     
-    # Handle NaN/Inf
     X = X.replace([np.inf, -np.inf], np.nan).fillna(0)
     
     print("\n--- Feature Statistics ---")
     print(df.groupby('label_mapped')[feature_cols].mean())
     print("--------------------------\n")
 
-    # Split
     print("Splitting data...")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Training
-    print("Training Random Forest (n_estimators=100)... This may take a while.")
-    # Increased estimators for better accuracy with large data
+    print("Training Random Forest (n_estimators=100)...")
     rf = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1, class_weight='balanced')
     rf.fit(X_train, y_train)
     
@@ -109,8 +112,7 @@ def train():
     y_pred = rf.predict(X_test)
     print(classification_report(y_test, y_pred))
     
-    # Save Metrics to JSON for Dashboard
-    # Calculate metrics
+    # Save Metrics
     report = classification_report(y_test, y_pred, output_dict=True)
     metrics = {
         "accuracy": accuracy_score(y_test, y_pred),
@@ -119,34 +121,28 @@ def train():
         "f1_score": report['weighted avg']['f1-score']
     }
     
-    metrics_path = "model_metrics.json"
-    import json
-    with open(metrics_path, 'w') as f:
+    with open(METRICS_PATH, 'w') as f:
         json.dump(metrics, f)
-    print(f"Metrics saved to {metrics_path}")
+    print(f"Metrics saved to {METRICS_PATH}")
     
-    # Save
+    # Save Model
     joblib.dump(rf, MODEL_PATH)
     print(f"Model saved to {MODEL_PATH}")
     
-    # Save feature names for reference
-    feature_names_path = "model_features.json"
-    with open(feature_names_path, 'w') as f:
+    # Save Features
+    with open(FEATURE_NAMES_PATH, 'w') as f:
         json.dump(feature_cols, f)
 
-    # Save Feature Importance for XAI (Step 8 of Test Plan)
     importances = rf.feature_importances_
     feature_importance = [
         {"name": col, "importance": float(imp)} 
         for col, imp in zip(feature_cols, importances)
     ]
-    # Sort by importance
     feature_importance.sort(key=lambda x: x['importance'], reverse=True)
     
-    importance_path = "feature_importance.json"
-    with open(importance_path, 'w') as f:
+    with open(FEATURES_PATH, 'w') as f:
         json.dump(feature_importance, f, indent=2)
-    print(f"Feature importance saved to {importance_path}")
+    print(f"Feature importance saved to {FEATURES_PATH}")
 
 if __name__ == "__main__":
     train()

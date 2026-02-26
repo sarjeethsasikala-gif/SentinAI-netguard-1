@@ -19,30 +19,30 @@ class BenchmarkLoader:
     Adapter pattern to normalize varying CSV schemas into the SentinAI Canonical Format.
     """
     
-    # Internal Schema (SentinAI)
+    # Internal Schema (SentinAI) - Maps CSV headers to Model Features (snake_case)
     CANONICAL_SCHEMA = {
-        'dest_port': 'Destination Port',
-        'flow_duration': 'Flow Duration',
-        'total_fwd_packets': 'Total Fwd Packets',
-        'total_l_fwd_packets': 'Total Length of Fwd Packets',
+        'dest_port': 'dest_port',
+        'flow_duration': 'flow_duration',
+        'total_fwd_packets': 'total_fwd_packets',
+        'total_l_fwd_packets': 'total_l_fwd_packets',
         'packet_size': 'packet_size', # Computed
         'label': 'Label'
     }
 
     # CIC-IDS-2017 Column Mapping
     CIC_IDS_MAP = {
-        ' Destination Port': 'Destination Port',
-        ' Flow Duration': 'Flow Duration',
-        ' Total Fwd Packets': 'Total Fwd Packets', 
-        'Total Length of Fwd Packets': 'Total Length of Fwd Packets',
+        ' Destination Port': 'dest_port',
+        ' Flow Duration': 'flow_duration',
+        ' Total Fwd Packets': 'total_fwd_packets', 
+        'Total Length of Fwd Packets': 'total_l_fwd_packets',
         ' Label': 'Label'
     }
     
     # NSL-KDD Column Mapping (Partial)
     KDD_MAP = {
-        'dst_bytes': 'Total Length of Fwd Packets',
-        'duration': 'Flow Duration',
-        'count': 'Total Fwd Packets', # Approx mapping
+        'dst_bytes': 'total_l_fwd_packets',
+        'duration': 'flow_duration',
+        'count': 'total_fwd_packets', # Approx mapping
         'class': 'Label'
     }
 
@@ -66,7 +66,13 @@ class BenchmarkLoader:
             else:
                 # Assume Internal/Synthetic Format
                 print("[BenchmarkLoader] Detected Standard/Internal Schema.")
-                return pd.read_csv(file_path)
+                df = pd.read_csv(file_path)
+                
+                # Normalize Label column if needed
+                if 'label' in df.columns:
+                    df.rename(columns={'label': 'Label'}, inplace=True)
+                    
+                return df
                 
         except Exception as e:
             print(f"[BenchmarkLoader] Error loading {file_path}: {e}")
@@ -91,6 +97,9 @@ class BenchmarkLoader:
         available_cols = [c for c in relevant_cols if c in df.columns]
         df = df[available_cols]
         
+        # Rename using map
+        df = df.rename(columns=cls.CIC_IDS_MAP)
+        
         return df
 
     @classmethod
@@ -100,13 +109,13 @@ class BenchmarkLoader:
         
         # Rename to Canonical
         df = df.rename(columns={
-            'dst_bytes': 'Total Length of Fwd Packets',
-            'duration': 'Flow Duration', 
-            'count': 'Total Fwd Packets',
+            'dst_bytes': 'total_l_fwd_packets',
+            'duration': 'flow_duration', 
+            'count': 'total_fwd_packets',
             'class': 'Label'
         })
         
         # Synthesis: KDD lacks 'Destination Port', assign generic 80
-        df['Destination Port'] = 80
+        df['dest_port'] = 80
         
         return df

@@ -3,6 +3,7 @@ FROM python:3.9-slim
 
 # Working Directory
 WORKDIR /app
+ENV PYTHONUNBUFFERED=1
 
 # System Dependencies (if any specialized libs needed, e.g. gcc for numpy)
 # numpy/pandas usually have wheels, so slim is often fine.

@@ -15,6 +15,7 @@ from datetime import datetime
 from scapy.all import sniff, IP, TCP, UDP, ICMP
 from backend.core.database import db
 from backend.services.threat_service import threat_service
+from backend.engine.inference import InferenceEngine
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO, format='[SNIFFER] %(message)s')
@@ -51,54 +52,47 @@ class LivePacketSniffer:
             if TCP in packet: dest_port = packet[TCP].dport
             elif UDP in packet: dest_port = packet[UDP].dport
 
-            # 2. Construct Telemetry Object (Matching log_generator schema)
+            # 2. Construct Telemetry Object
             telemetry = {
                 "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 "source_ip": src_ip,
                 "destination_ip": dst_ip,
-                "source_country": "UNK", # Real deployment would use GeoIP
+                "source_country": "UNK", 
                 "protocol": protocol,
                 "packet_size": packet_len,
                 "dest_port": dest_port,
-                "label": "Analyzing..." # To be filled by ML
             }
 
-            # 3. Detect Threat (Simplistic Heuristic for Demo)
-            # In full version, call: label, risk = ml_model.predict(telemetry)
-            label = "Normal"
-            risk_score = 10
+            # 3. Detect Threat using ML Engine
+            prediction = InferenceEngine.predict(telemetry)
             
-            # Simulated Detection Logic based on Port/Rate
-            if dest_port in [22, 3389] and self.packet_count > 10:
-                label = "Brute Force"
-                risk_score = 75
-            elif packet_len > 1000 and protocol == "ICMP":
-                label = "DDoS"
-                risk_score = 90
-            elif self.packet_count > 100: # Fast rate
-                label = "DDoS"
-                risk_score = 85
+            label = prediction["label"]
+            risk_score = prediction["risk_score"]
+            confidence = prediction["confidence"]
 
             telemetry['label'] = label
             telemetry['risk_score'] = risk_score
+            telemetry['confidence'] = confidence
             telemetry['metadata'] = {"live_capture": True}
 
-            # 4. Save to Database (if Threat)
-            # Only save interesting events to avoid flooding DB
-            if label != "Normal" or (self.packet_count % 50 == 0):
-                logger.info(f"Captured: {src_ip} -> {dst_ip} [{protocol}] : {label}")
+            # 4. Save to Database (if Threat or Sampling)
+            # Log all threats, but sample normal traffic to save DB space
+            if label != "BENIGN" and label != "Normal": 
+                logger.warning(f"THREAT DETECTED: {src_ip} -> {dst_ip} [{label}] Risk: {risk_score}")
                 db.save_event(telemetry)
-
-                # 5. Real-Time Broadcast (WhatsApp-style Push)
+                
+                # 5. Real-Time Broadcast
                 try:
-                    # Notify the API Gateway to push this to the UI
-                    requests.post("http://localhost:8000/api/internal/notify", json={
+                    requests.post("http://127.0.0.1:8000/api/internal/notify", json={
                         "type": "THREAT_DETECTED",
                         "data": telemetry
                     }, timeout=0.5)
-                except Exception as ex:
-                    # Non-blocking: If API is down, just log it. Sniffer must survive.
-                    logger.debug(f"Broadcast failed: {ex}")
+                except Exception:
+                    pass # Fail silently for broadcast
+            
+            elif self.packet_count % 100 == 0:
+                # Heartbeat log for normal traffic
+                logger.info(f"Monitor Active: Processed {self.packet_count} packets...")
 
         except Exception as e:
             logger.error(f"Error processing packet: {e}")

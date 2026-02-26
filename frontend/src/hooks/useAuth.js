@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/axiosConfig';
 
 export const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,7 +19,7 @@ export const useAuth = () => {
                 setIsAuthenticated(true);
                 setUserRole(payload.role || 'SOC Analyst');
                 setUsername(payload.sub || '');
-                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             } catch (e) {
                 localStorage.removeItem('token');
                 setIsAuthenticated(false);
@@ -29,12 +29,12 @@ export const useAuth = () => {
 
     const login = async (username, password) => {
         try {
-            // Point to Python Backend
-            const res = await axios.post('http://localhost:8000/api/auth/login', { username, password });
+            // Point to Python Backend via proxy
+            const res = await api.post('/auth/login', { username, password });
             const { access_token } = res.data;
 
             localStorage.setItem('token', access_token);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+            api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
             const payload = JSON.parse(atob(access_token.split('.')[1]));
             setIsAuthenticated(true);
@@ -49,7 +49,7 @@ export const useAuth = () => {
 
     const logout = () => {
         localStorage.removeItem('token');
-        delete axios.defaults.headers.common['Authorization'];
+        delete api.defaults.headers.common['Authorization'];
         setIsAuthenticated(false);
         setUserRole('SOC Analyst');
     };

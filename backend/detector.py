@@ -40,35 +40,105 @@ class SentinAIInferenceCore:
         'flow_duration', 
         'total_fwd_packets', 
         'total_l_fwd_packets', 
-        'packet_size'
+        'packet_size',
+        'protocol_num',
+        'chaos_factor',
+        'country_code'
     ]
+    
+    _COUNTRY_MAP = None
+
+    @staticmethod
+    def _load_country_map():
+        if SentinAIInferenceCore._COUNTRY_MAP is None:
+            try:
+                import os
+                # Assuming relative to backend root or similar. 
+                # Ideally config.BASE_DIR, but we imports strictly.
+                # Trying absolute path based on known structure or relative to file.
+                base_dir = os.path.dirname(os.path.abspath(__file__))
+                map_path = os.path.join(base_dir, "country_map.json")
+                if os.path.exists(map_path):
+                    with open(map_path, 'r') as f:
+                        SentinAIInferenceCore._COUNTRY_MAP = json.load(f)
+                else:
+                    logger.warning(f"Country Map not found at {map_path}. Using empty map.")
+                    SentinAIInferenceCore._COUNTRY_MAP = {}
+            except Exception as e:
+                logger.error(f"Failed to load country map: {e}")
+                SentinAIInferenceCore._COUNTRY_MAP = {}
+        return SentinAIInferenceCore._COUNTRY_MAP
 
     @staticmethod
     def transform_telemetry(telemetry_frame: pd.DataFrame) -> pd.DataFrame:
         """
         Feature Engineering Pipeline.
         1. Aligns columns with Training Schema.
-        2. Imputes missing complexity metrics (flow_duration) which are absent in single-packet contexts.
+        2. Imputes missing complexity metrics.
+        3. Encodes categorical features (Protocol, Country).
+        4. Extracts synthetic signals (Chaos Factor).
         """
-        # Create Deep Copy to avoid mutating source stream
+        # Create Deep Copy
         vector = telemetry_frame.copy()
         
-        # Heuristic Imputation for missing flow features in stream mode
+        # --- 1. Imputation ---
         if 'flow_duration' not in vector.columns:
             vector['flow_duration'] = 0
         if 'total_fwd_packets' not in vector.columns:
             vector['total_fwd_packets'] = 1
         if 'total_l_fwd_packets' not in vector.columns:
-            vector['total_l_fwd_packets'] = vector['packet_size']
-            
-        vector = vector.copy() # Ensure no SettingWithCopy warning
+            # If packet_size exists, use it
+            if 'packet_size' in vector.columns:
+                vector['total_l_fwd_packets'] = vector['packet_size']
+            else:
+                vector['total_l_fwd_packets'] = 0
         
-        # Ensure all columns exist and fill NaNs
+        if 'packet_size' not in vector.columns:
+             vector['packet_size'] = vector['total_l_fwd_packets']
+
+        # --- 2. Protocol Encoding ---
+        # Map: {'TCP': 6, 'UDP': 17, 'ICMP': 1, 'SCTP': 132}
+        protocol_map = {'TCP': 6, 'UDP': 17, 'ICMP': 1, 'SCTP': 132}
+        if 'protocol' in vector.columns:
+            # Handle string case insensitivity
+            vector['protocol_num'] = vector['protocol'].astype(str).str.upper().map(protocol_map).fillna(0)
+        else:
+            vector['protocol_num'] = 0
+            
+        # --- 3. Chaos Factor Extraction ---
+        if 'metadata' in vector.columns:
+            import ast
+            def extract_chaos(x):
+                try:
+                    # Handle raw dict or string representation
+                    if isinstance(x, dict):
+                        return float(x.get('chaos_factor', 0))
+                    s = str(x).replace('np.float64(', '').replace(')', '')
+                    d = ast.literal_eval(s)
+                    return float(d.get('chaos_factor', 0))
+                except:
+                    return 0.0
+            vector['chaos_factor'] = vector['metadata'].apply(extract_chaos)
+        else:
+            vector['chaos_factor'] = 0.0
+            
+        # --- 4. Country Encoding ---
+        country_map = SentinAIInferenceCore._load_country_map()
+        if 'source_country' in vector.columns:
+            vector['country_code'] = vector['source_country'].astype(str).map(country_map).fillna(0) # Default to 0 if unknown
+        else:
+            vector['country_code'] = 0
+            
+        vector = vector.copy() 
+        
+        # Ensure all columns exist
         for feature in SentinAIInferenceCore.REQUIRED_FEATURES:
             if feature not in vector.columns:
                 vector[feature] = 0.0
-                
-        return vector[SentinAIInferenceCore.REQUIRED_FEATURES].fillna(0)
+        
+        final_vector = vector[SentinAIInferenceCore.REQUIRED_FEATURES].fillna(0)
+            
+        return final_vector
 
 class HeuristicRiskEngine:
     """

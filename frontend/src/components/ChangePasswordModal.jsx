@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axiosConfig';
 import { Lock, X, Check } from 'lucide-react';
 
 const ChangePasswordModal = ({ isOpen, onClose, username }) => {
@@ -29,7 +29,7 @@ const ChangePasswordModal = ({ isOpen, onClose, username }) => {
 
         setLoading(true);
         try {
-            await axios.post('http://localhost:8000/api/auth/change-password', {
+            await api.post('/auth/change-password', {
                 username,
                 old_password: oldPassword,
                 new_password: newPassword

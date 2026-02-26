@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ../../
+      dockerfile: frontend/Dockerfile
+    container_name: sentinai-frontend
+    ports:
+      - "80:80"
+    volumes:
+      # Mount custom Nginx config for 4-VM setup
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: always
+    networks:
+      - frontend-net
+
+networks:
+  frontend-net:
+    driver: bridge

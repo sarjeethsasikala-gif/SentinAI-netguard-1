@@ -18,16 +18,20 @@ import uuid
 import os
 import json
 import logging
+from datetime import datetime
 from dotenv import load_dotenv
 
 # Internal Modules
 try:
-    from backend.log_generator import _synthesizer, generate_log_entry
     from backend.detector import TrafficClassifier, RiskAssessmentEngine, calculate_risk_score
+    from backend.services.oci_storage import oci_manager # New OCI Integration
 except ImportError:
     # Fallback for direct execution where 'backend' package isn't resolved
-    from log_generator import _synthesizer, generate_log_entry
-    from detector import TrafficClassifier, RiskAssessmentEngine, calculate_risk_score
+    from backend.detector import TrafficClassifier, RiskAssessmentEngine, calculate_risk_score
+    # Mock for local run without package structure
+    class MockOCI:
+        def archive_logs(self, *args, **kwargs): pass
+    oci_manager = MockOCI()
 
 load_dotenv()
 
@@ -40,7 +44,7 @@ class SentinelConfig:
     _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
     # Storage for disconnected environments
-    LOCAL_STORAGE_PATH = os.path.join(_BASE_DIR, "threats.json")
+    LOCAL_STORAGE_PATH = os.path.join(os.path.dirname(_BASE_DIR), "data", "threats.json")
     MODEL_PATH = os.path.join(_BASE_DIR, "model_real.pkl")
 
 class IntelligencePersistence:
@@ -95,6 +99,8 @@ class NetworkSentinel:
         self.model = self._load_inference_model()
         self.persistence = IntelligencePersistence()
         self.offender_history = {} # In-memory state for temporal correlation
+        self.batch_counter = 0 # Track bursts for archival
+        self.archival_buffer = [] # Store incidents for OCI upload
 
     def _load_inference_model(self):
         """Loads the predictive model into memory."""
@@ -106,29 +112,33 @@ class NetworkSentinel:
             logger.critical(f"FATAL: Model Loading Failed - {e}")
             return None
 
-    def analyze_traffic_burst(self, sample_size: int = 50):
-        if self.model is None:
+    def process_telemetry_batch(self, telemetry_batch: list):
+        """
+        Ingests and analyzes a batch of telemetry records pushed from VM1.
+        """
+        if self.model is None or not telemetry_batch:
             return
 
-        logger.info(f"Analyzing burst of {sample_size} telemetry frames...")
+        logger.info(f"Processing batch of {len(telemetry_batch)} records...")
         
         detected_incidents = []
         
-        for _ in range(sample_size):
-            # 1. Synthesize Telemetry
-            telemetry = _synthesizer.synthesize_packet()
-            
-            # 2. Vectorize for Model
+        for telemetry in telemetry_batch:
+            # 1. Vectorize for Model
+            # Ensure keys match what Generator sends
             raw_frame = pd.DataFrame([{
-                'dest_port': telemetry['dest_port'],
-                'packet_size': telemetry['packet_size']
+                'dest_port': telemetry.get('dest_port', 0),
+                'packet_size': telemetry.get('packet_size', 0),
+                'protocol': telemetry.get('protocol', 'TCP'),
+                'source_country': telemetry.get('source_country', 'Unknown'),
+                'metadata': telemetry.get('metadata', {})
             }])
             
-            # Use Domain Classifier to ensure Feature Completeness (Injects 0.0 for missing cols like flow_duration)
+            # Use Domain Classifier to ensure Feature Completeness
             input_vector = TrafficClassifier.vectorize_payload(raw_frame)
 
             try:
-                # 3. Inference
+                # 2. Inference
                 probs = self.model.predict_proba(input_vector)[0]
                 classes = self.model.classes_
                 predicted_label = self.model.predict(input_vector)[0]
@@ -137,12 +147,12 @@ class NetworkSentinel:
                 class_index = list(classes).index(predicted_label)
                 confidence = probs[class_index]
 
-                # 4. Assessment
+                # 3. Assessment
                 severity_index = RiskAssessmentEngine.compute_severity_index(confidence, predicted_label)
 
                 if predicted_label != 'Normal':
-                    # 5. Temporal Analysis (Repeat Offender Check)
-                    src_ip = telemetry['source_ip']
+                    # 4. Temporal Analysis (Repeat Offender Check)
+                    src_ip = telemetry.get('source_ip', '0.0.0.0')
                     self.offender_history[src_ip] = self.offender_history.get(src_ip, 0) + 1
                     
                     escalation_flag = False
@@ -154,15 +164,15 @@ class NetworkSentinel:
 
                     logger.info(f"THREAT DETECTED: {predicted_label} from {src_ip} (Severity: {severity_index})")
 
-                    # 6. Incident Creation
+                    # 5. Incident Creation
                     incident_record = {
                         "id": str(uuid.uuid4()),
-                        "timestamp": telemetry['timestamp'],
-                        "source_ip": telemetry['source_ip'],
-                        "destination_ip": telemetry['destination_ip'],
-                        "destination_port": telemetry['dest_port'],
-                        "protocol": telemetry['protocol'],
-                        "packet_size": telemetry['packet_size'],
+                        "timestamp": telemetry.get('timestamp', datetime.now().isoformat()),
+                        "source_ip": telemetry.get('source_ip'),
+                        "destination_ip": telemetry.get('destination_ip'),
+                        "destination_port": telemetry.get('dest_port'),
+                        "protocol": telemetry.get('protocol'),
+                        "packet_size": telemetry.get('packet_size'),
                         "predicted_label": predicted_label,
                         "confidence": float(confidence),
                         "risk_score": severity_index, # API Expects 'risk_score'
@@ -174,18 +184,35 @@ class NetworkSentinel:
             except Exception as e:
                 logger.error(f"Inference Cycle Error: {e}")
 
-        # 7. Batch Persistence
+        # 6. Batch Persistence
         if detected_incidents:
             self.persistence.persist_batch(detected_incidents)
+            self.archival_buffer.extend(detected_incidents)
             logger.info(f"Registered {len(detected_incidents)} new security incidents.")
         else:
-            logger.info("Traffic burst analysis complete. No threats detected.")
+            logger.info("Batch analysis complete. No threats detected.")
+
+        # 8. OCI Archival Check (Every 10 bursts)
+        self.batch_counter += 1
+        if self.batch_counter >= 10:
+            if self.archival_buffer:
+                logger.info(f"[OCI] Triggering archival for {len(self.archival_buffer)} records...")
+                success = oci_manager.archive_logs(self.archival_buffer)
+                if success:
+                    self.archival_buffer = [] # Clear buffer on success
+                    logger.info("[OCI] Archival successful. Buffer cleared.")
+                else:
+                    logger.warning("[OCI] Archival failed. Keeping data in buffer.")
+            
+            self.batch_counter = 0
 
 
-def run_live_detection(num_records=50):
-    """Legacy Entry Point Adapter."""
-    sentinel = NetworkSentinel()
-    sentinel.analyze_traffic_burst(sample_size=num_records)
+# Singleton Instance to be imported by API
+sentinel_service = NetworkSentinel()
 
 if __name__ == "__main__":
-    run_live_detection()
+    logger.info("Starting Sentinel in Standalone Mode...")
+    # In standalone, we might want to listen to a queue or just wait
+    # For now, we do nothing as it's push-based from API
+    while True:
+        time.sleep(1)

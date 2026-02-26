@@ -164,7 +164,7 @@ function App() {
 
         {/* 4. Visualization Panel */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <GeoThreatMap theme={theme} />
+          <GeoThreatMap theme={theme} threats={threats} />
           <TopologyGraph />
         </div>
 

@@ -39,7 +39,7 @@ const FeatureImportanceChart = ({ data }) => {
                             itemStyle={{ color: 'var(--chart-tooltip-text)' }}
                             cursor={{ fill: 'var(--hover-bg)' }}
                         />
-                        <Bar dataKey="importance" radius={[0, 4, 4, 0]}>
+                        <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                             {data.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                             ))}

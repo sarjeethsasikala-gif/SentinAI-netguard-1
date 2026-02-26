@@ -181,15 +181,33 @@ def generate_log_entry():
 # Expose synthesis method via alias for older code
 _synthesizer.synthesize_packet = _synthesizer.synthesize_artifact
 
-def generate_training_data(num_samples=5000, filename='backend/training_data.csv'):
+def generate_training_data(num_samples=5000, filename='backend/Training data/training_data.csv'):
     df = _synthesizer.generate_batch(num_samples)
     df.to_csv(filename, index=False)
     print(f"[AegisFabric] Dataset persisted to {filename}")
     
     # Also save as JSON for the application fallback database
-    json_filename = 'backend/threats.json'
+    json_filename = 'data/threats.json'
+    records = df.to_dict(orient='records')
+    
+    # Backfill fields for Dashboard Compatibility
+    for record in records:
+        record['predicted_label'] = record['label'] # Align schema
+        
+        # Backfill Country for Map
+        if 'source_country' not in record or not record['source_country']:
+            record['source_country'] = random.choice(COUNTRY_CODES)
+
+        # Mock Risk Score based on label for visual consistency
+        if record['label'] == 'Normal':
+            record['risk_score'] = random.randint(0, 20)
+        elif record['label'] == 'DDoS':
+             record['risk_score'] = random.randint(70, 95)
+        else:
+             record['risk_score'] = random.randint(40, 80)
+             
     with open(json_filename, 'w') as f:
-        json.dump(df.to_dict(orient='records'), f, indent=2)
+        json.dump(records, f, indent=2)
     print(f"[AegisFabric] JSON Database persisted to {json_filename}")
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axiosConfig';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Download, FileText, Loader } from 'lucide-react';
@@ -14,7 +14,7 @@ const ReportGenerator = ({ date }) => {
             // 1. Fetch Report Data (Trigger Generation)
             const targetDate = date || new Date().toISOString().split('T')[0];
             // Use POST to ensure report is generated if missing
-            const res = await axios.post(`http://localhost:8000/api/reports/generate`, { date: targetDate });
+            const res = await api.post(`/reports/generate`, { date: targetDate });
 
             if (res.data.error) {
                 alert("No report data available for this date.");

@@ -1,0 +1,2336 @@
+{
+  "metadata": {
+    "report_id": "RPT-20260206",
+    "generated_at": "2026-02-06T14:09:04.708453",
+    "target_date": "2026-02-06"
+  },
+  "summary": {
+    "total_incidents": 115,
+    "resolved_incidents": 0,
+    "active_incidents": 115,
+    "severity_distribution": {
+      "Critical": 115
+    },
+    "top_attack_vectors": {
+      "DDoS": 115
+    },
+    "top_offenders": {
+      "45.33.13.20": 2,
+      "45.33.14.21": 2,
+      "45.33.11.3": 2,
+      "45.33.17.9": 2,
+      "45.33.13.48": 2
+    },
+    "top_targets": {
+      "10.0.5.55": 4,
+      "10.0.5.45": 4,
+      "10.0.5.28": 4,
+      "10.0.5.90": 3,
+      "10.0.5.92": 3
+    }
+  },
+  "critical_threats": [
+    {
+      "id": "1aa46abf-a34d-444e-938f-d3d256d5f614",
+      "timestamp": "2026-02-06 13:39:48",
+      "type": "DDoS",
+      "source": "45.33.13.20",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ad87aeed-aceb-4563-b5f7-848357ef9fdc",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.14.21",
+      "target": "10.0.5.90",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1f69a6c1-110d-486c-b086-6d7ed12205ae",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.11.3",
+      "target": "10.0.5.92",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "664d485c-7be3-4be9-8354-eb6c9365a89e",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.17.9",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "071fbf5b-d17b-4e52-af42-3a4d33e5b2ef",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.10.19",
+      "target": "10.0.5.40",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a0e719e2-0207-4b9c-8e41-4bae7aecff39",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.16.25",
+      "target": "10.0.5.76",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1dd7ca3a-75a5-4949-9141-e0d966587f4c",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.13.48",
+      "target": "10.0.5.84",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f5047dcc-0a9b-4268-ba4b-d26caffd04b4",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.10.21",
+      "target": "10.0.5.96",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "64eed6b5-8693-476c-87d6-01c09a9be1df",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.11.14",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0b23a398-c5af-4634-84f3-7da1e3c665bc",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.19.40",
+      "target": "10.0.5.86",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b43878ee-f3e5-4e0a-8e3f-08829fd108fd",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.17.33",
+      "target": "10.0.5.10",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f8af0187-4762-4f24-a01f-1cc04b7e34bb",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.10.44",
+      "target": "10.0.5.66",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "27eaa028-1bbf-441b-8cbe-8a3495da8f40",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.13.34",
+      "target": "10.0.5.95",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "37774f8e-5876-4cbf-a1c1-5ad1fb8eeb2f",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.16.47",
+      "target": "10.0.5.52",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0b802178-887c-40b4-b33a-869095b5b5be",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.14.27",
+      "target": "10.0.5.26",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "dd011653-f04d-4a50-b4b8-ef4fa6764018",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.12.6",
+      "target": "10.0.5.42",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "532ce54f-b3f5-41bd-b8cc-76af9eb47b99",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.19.15",
+      "target": "10.0.5.50",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ff3e10ba-12ee-4794-b1b9-f562c0932295",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.12.9",
+      "target": "10.0.5.15",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "975b4075-aafa-4595-a328-8a7d26429097",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.13.20",
+      "target": "10.0.5.73",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "fb604b2a-7bbc-4ab2-9e3b-48a59d0730c9",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.16.3",
+      "target": "10.0.5.41",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "2547e200-2ce0-4318-b133-20a15bdbdd52",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.19.46",
+      "target": "10.0.5.33",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0a4455cb-d439-4569-961c-b237556caea9",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.12.33",
+      "target": "10.0.5.83",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "2385218e-dae2-4055-8af0-1dfe39d77caf",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.18.5",
+      "target": "10.0.5.49",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "26d8d671-e890-45c9-8302-beeec48d998c",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.18.7",
+      "target": "10.0.5.40",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "d5c5369e-d901-4ff9-894d-576bdb9a6828",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.10.21",
+      "target": "10.0.5.85",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ad3eac69-0727-4fc5-af47-8e47a4565d64",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.13.48",
+      "target": "10.0.5.48",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c53386da-42c1-40f3-8140-3f12c5fcefaa",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.19.41",
+      "target": "10.0.5.42",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c1ccbdf0-ff6e-4995-add5-677530f503ca",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.14.21",
+      "target": "10.0.5.13",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "afe2a708-450d-4711-8b3c-4666ab99b520",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.19.20",
+      "target": "10.0.5.12",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "961fd87e-d611-4720-8e7f-f3c403d1eebf",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.10.11",
+      "target": "10.0.5.18",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3d43482c-7976-4fd5-9038-cc500932d2c4",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.10.3",
+      "target": "10.0.5.87",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7f8a608d-c488-4f3d-a9e7-f66178d478b0",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.14.15",
+      "target": "10.0.5.54",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5a9939f0-b399-4f82-a59e-19c581ec4e99",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.13.22",
+      "target": "10.0.5.68",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "816ec0ac-b043-4c80-834f-6f86cc5a71a6",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.14.30",
+      "target": "10.0.5.67",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "189a9b6c-8bd5-4e53-a7b3-8776cb558575",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.13.24",
+      "target": "10.0.5.71",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "104bb8ff-06d7-471b-a0c8-41436b032520",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.15.27",
+      "target": "10.0.5.69",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f789fb80-8591-43cf-9b6e-1db0773bee41",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.13.18",
+      "target": "10.0.5.93",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3b48d4b9-8e3b-4d78-958a-6a5528498b66",
+      "timestamp": "2026-02-06 13:22:10",
+      "type": "DDoS",
+      "source": "45.33.14.32",
+      "target": "10.0.5.90",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e47b865e-1fe8-4c53-8868-8b68b40da59c",
+      "timestamp": "2026-02-06 13:22:09",
+      "type": "DDoS",
+      "source": "45.33.14.3",
+      "target": "10.0.5.86",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a1e94988-9444-4236-83d7-52b719a21954",
+      "timestamp": "2026-02-06 13:22:07",
+      "type": "DDoS",
+      "source": "45.33.11.35",
+      "target": "10.0.5.56",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7947d860-5e7b-4715-947c-14db2617e5c7",
+      "timestamp": "2026-02-06 13:21:14",
+      "type": "DDoS",
+      "source": "45.33.12.44",
+      "target": "10.0.5.39",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "87274a88-acdc-4a9a-a98a-ab410bbeda8d",
+      "timestamp": "2026-02-06 13:21:14",
+      "type": "DDoS",
+      "source": "45.33.13.14",
+      "target": "10.0.5.40",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b40d1a47-4d48-46cd-8c00-67e0f1a2d620",
+      "timestamp": "2026-02-06 13:21:14",
+      "type": "DDoS",
+      "source": "45.33.15.37",
+      "target": "10.0.5.17",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "fa10e2c3-f4d0-4f3f-b8bb-530dbb5fa5b4",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.17.25",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b9d4660c-7831-4b43-91e0-c469639e7fb9",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.13.21",
+      "target": "10.0.5.90",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cb28716c-c877-476d-bac2-ea89afde8c02",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.12.2",
+      "target": "10.0.5.13",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f56f1013-1688-46cd-b228-a00a52e758c9",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.15.22",
+      "target": "10.0.5.22",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6f545fcb-9242-4ad1-89b0-bc700f5c7a4d",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.10.39",
+      "target": "10.0.5.61",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "36aea0ec-bdd9-41fa-84b8-84d0d98e5dad",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.13.16",
+      "target": "10.0.5.64",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cffec507-d786-4c11-8f70-8ae82093436a",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.19.7",
+      "target": "10.0.5.94",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "8c67d2ca-8498-474a-92c0-740eea74ff16",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.13.10",
+      "target": "10.0.5.70",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cf15274d-bd63-4493-b8db-d8575f5f35d4",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.15.45",
+      "target": "10.0.5.56",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7ac94443-0ee7-40cf-a298-5a4db08acafe",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.17.23",
+      "target": "10.0.5.13",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5c455fe4-a39c-48e2-9d36-1874f61fa35a",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.16.35",
+      "target": "10.0.5.31",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a0e8f8ae-5aa0-4743-b7b9-2f4f673c8b1f",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.14.6",
+      "target": "10.0.5.27",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0752723f-6039-4cc2-9a3b-445b0954ad0b",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.11.17",
+      "target": "10.0.5.60",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1ee243c2-31fa-4a30-b6db-ba477cd86459",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.15.22",
+      "target": "10.0.5.92",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7780354f-e9cb-42e8-9402-ec2074711af2",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.10.34",
+      "target": "10.0.5.10",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3ecf080c-40b4-462b-a9ed-5988d895f780",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.11.42",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5d352b2e-3260-4c2d-9ba5-299bca7fd036",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.15.41",
+      "target": "10.0.5.99",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3ed0f25f-b94e-4eb8-bf7e-738ba688fd49",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.12.10",
+      "target": "10.0.5.59",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "85680fd0-2731-4a15-9ffb-7082066389fd",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.10.4",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6d4c5857-c34a-4ea3-b986-0f80c17ddb57",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.13.47",
+      "target": "10.0.5.97",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "30c58791-e77e-482a-bd7e-428e0b900494",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.13.42",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e65d58d5-6dd5-46e4-a9ca-269e2ccfcd58",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.18.48",
+      "target": "10.0.5.11",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6d7c24ae-f811-4117-95f0-34bf6338076d",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.13.46",
+      "target": "10.0.5.52",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "064bd05e-18da-45b3-9431-78847d64bd13",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.19.32",
+      "target": "10.0.5.37",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e0418cf4-0171-44b9-ae29-bc70f78235bf",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.12.21",
+      "target": "10.0.5.65",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7b15850b-7798-4e16-a513-9d212631c9d4",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.19.38",
+      "target": "10.0.5.35",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "44889493-d2cf-4655-b42f-d5f21f4e5314",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.12.38",
+      "target": "10.0.5.98",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c6546120-84cb-47ee-afbb-58e2b35cfb8c",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.17.35",
+      "target": "10.0.5.80",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "13279a4c-9210-4195-a90b-45efcf9ae83a",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.19.32",
+      "target": "10.0.5.86",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "815fc57c-5c95-47fe-b449-53048436e258",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.16.24",
+      "target": "10.0.5.50",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "80a7bb81-cb8d-43f5-803a-762dc84a0cc3",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.18.33",
+      "target": "10.0.5.65",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "29096c48-ea54-439a-95ac-908a0f5d99fd",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.18.20",
+      "target": "10.0.5.42",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "42a0d8c6-7929-41ab-b320-b7b8bdd537a9",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.12.44",
+      "target": "10.0.5.57",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "141429e9-1a9c-4946-a762-20630ad92816",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.10.14",
+      "target": "10.0.5.78",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c27482a5-03f4-4957-aead-5ae9e5443d95",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.12.1",
+      "target": "10.0.5.83",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "af753ba1-eaa6-473c-8c20-290b4450895c",
+      "timestamp": "2026-02-06 13:17:55",
+      "type": "DDoS",
+      "source": "45.33.18.46",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "d5ae705f-80e8-4f64-9335-fda36883e3e8",
+      "timestamp": "2026-02-06 13:17:55",
+      "type": "DDoS",
+      "source": "45.33.12.15",
+      "target": "10.0.5.80",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ed01bef3-b190-4fac-a255-6b09ae7062bc",
+      "timestamp": "2026-02-06 13:17:16",
+      "type": "DDoS",
+      "source": "45.33.14.39",
+      "target": "10.0.5.35",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "aca15a21-2cc7-4467-9dc4-7f9f27a8cc8a",
+      "timestamp": "2026-02-06 13:17:16",
+      "type": "DDoS",
+      "source": "45.33.18.26",
+      "target": "10.0.5.47",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5db7ef10-f33a-4982-b85e-a5451fcca19b",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.17.43",
+      "target": "10.0.5.66",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1acf93b6-9264-4e95-b162-b72e6c3a52fb",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.10.48",
+      "target": "10.0.5.91",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c2c92eb3-027c-4649-bde7-55866491d78c",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.12.14",
+      "target": "10.0.5.29",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b36d0815-7f65-49a7-a70e-af38aa040531",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.13.41",
+      "target": "10.0.5.69",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f1aa5e91-260b-4dd4-8229-d6ea589d6699",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.14.37",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "15063b7a-e8f8-43ca-8f58-5ead6c6b1337",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.12.37",
+      "target": "10.0.5.62",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e8ce82d4-5497-49fa-8be9-843d29a38424",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.16.28",
+      "target": "10.0.5.92",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "fd3cb7a2-1071-4060-b298-c6be505bfa12",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.19.25",
+      "target": "10.0.5.14",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5bc14708-f78c-4dbf-bcb2-b6e8ebc375e8",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.17.3",
+      "target": "10.0.5.10",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "039a06fa-a49a-4698-a97e-f2145b95579e",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.14.29",
+      "target": "10.0.5.18",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "26587e71-1112-4fcd-a6f0-a9eef6e3ed88",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.15.42",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f4cbacc8-21c7-4fca-bcf4-ae8c92f724be",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.18.10",
+      "target": "10.0.5.38",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "03eea69c-3f02-40eb-917d-4554d4d352f7",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.15.48",
+      "target": "10.0.5.94",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "902c7251-0e93-45fe-9eb0-51b6e54bea51",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.17.30",
+      "target": "10.0.5.29",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "75406dad-81f8-476b-857b-48c838bffa63",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.11.4",
+      "target": "10.0.5.27",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e888c897-e00a-4f26-ab94-a05dd99832df",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.18.47",
+      "target": "10.0.5.29",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5d2a1e81-58fc-4f83-840d-c8721eafbd33",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.15.27",
+      "target": "10.0.5.68",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "59e628aa-614d-4dd8-93c1-7e18bab69952",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.19.1",
+      "target": "10.0.5.32",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a8037ea7-e721-4956-ae8e-28f6f55130be",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.17.34",
+      "target": "10.0.5.63",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "115536c4-4953-4a14-a0fa-1d8cdb1f9bcf",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.17.9",
+      "target": "10.0.5.18",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "37be0a00-5a85-4ded-9309-c77716fd9366",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.10.38",
+      "target": "10.0.5.74",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c1d20923-f845-4685-964e-32106ce5b911",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.19.14",
+      "target": "10.0.5.93",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "494bef8e-29f8-4048-a486-a06672e0eff2",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.11.40",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5b978b41-1edd-4aea-8127-9844176ea286",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.13.43",
+      "target": "10.0.5.35",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "91eac66f-2fbc-458c-9b3c-403c29833d25",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.14.46",
+      "target": "10.0.5.53",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6d88a7c3-c2fa-4f88-acd5-4ab3b051c11a",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.19.37",
+      "target": "10.0.5.99",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cb45f89d-595f-43b3-9307-a7ce96a858d7",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.11.3",
+      "target": "10.0.5.70",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ec9c7328-6078-4807-af10-f5cf7c23e49e",
+      "timestamp": "2026-02-06 13:13:39",
+      "type": "DDoS",
+      "source": "45.33.15.40",
+      "target": "10.0.5.12",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "89b01f82-2546-4c88-b737-a3c4ec40320c",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.14.37",
+      "target": "10.0.5.15",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "edc48e0a-7edc-4a26-bc27-b7626f837baf",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.11.43",
+      "target": "10.0.5.54",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "25f6f738-da08-42e4-8664-5b1cffed6510",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.17.23",
+      "target": "10.0.5.99",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e95ccf15-3f0f-4211-89e0-578db2278c26",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.10.5",
+      "target": "10.0.5.66",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b08be506-1d4a-4cc8-913e-fdbd423262e6",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.16.32",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    }
+  ],
+  "detailed_log": [
+    {
+      "id": "1aa46abf-a34d-444e-938f-d3d256d5f614",
+      "timestamp": "2026-02-06 13:39:48",
+      "type": "DDoS",
+      "source": "45.33.13.20",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ad87aeed-aceb-4563-b5f7-848357ef9fdc",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.14.21",
+      "target": "10.0.5.90",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1f69a6c1-110d-486c-b086-6d7ed12205ae",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.11.3",
+      "target": "10.0.5.92",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "664d485c-7be3-4be9-8354-eb6c9365a89e",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.17.9",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "071fbf5b-d17b-4e52-af42-3a4d33e5b2ef",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.10.19",
+      "target": "10.0.5.40",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a0e719e2-0207-4b9c-8e41-4bae7aecff39",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.16.25",
+      "target": "10.0.5.76",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1dd7ca3a-75a5-4949-9141-e0d966587f4c",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.13.48",
+      "target": "10.0.5.84",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f5047dcc-0a9b-4268-ba4b-d26caffd04b4",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.10.21",
+      "target": "10.0.5.96",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "64eed6b5-8693-476c-87d6-01c09a9be1df",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.11.14",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0b23a398-c5af-4634-84f3-7da1e3c665bc",
+      "timestamp": "2026-02-06 13:39:47",
+      "type": "DDoS",
+      "source": "45.33.19.40",
+      "target": "10.0.5.86",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b43878ee-f3e5-4e0a-8e3f-08829fd108fd",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.17.33",
+      "target": "10.0.5.10",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f8af0187-4762-4f24-a01f-1cc04b7e34bb",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.10.44",
+      "target": "10.0.5.66",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "27eaa028-1bbf-441b-8cbe-8a3495da8f40",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.13.34",
+      "target": "10.0.5.95",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "37774f8e-5876-4cbf-a1c1-5ad1fb8eeb2f",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.16.47",
+      "target": "10.0.5.52",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0b802178-887c-40b4-b33a-869095b5b5be",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.14.27",
+      "target": "10.0.5.26",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "dd011653-f04d-4a50-b4b8-ef4fa6764018",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.12.6",
+      "target": "10.0.5.42",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "532ce54f-b3f5-41bd-b8cc-76af9eb47b99",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.19.15",
+      "target": "10.0.5.50",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ff3e10ba-12ee-4794-b1b9-f562c0932295",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.12.9",
+      "target": "10.0.5.15",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "975b4075-aafa-4595-a328-8a7d26429097",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.13.20",
+      "target": "10.0.5.73",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "fb604b2a-7bbc-4ab2-9e3b-48a59d0730c9",
+      "timestamp": "2026-02-06 13:39:46",
+      "type": "DDoS",
+      "source": "45.33.16.3",
+      "target": "10.0.5.41",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "2547e200-2ce0-4318-b133-20a15bdbdd52",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.19.46",
+      "target": "10.0.5.33",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0a4455cb-d439-4569-961c-b237556caea9",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.12.33",
+      "target": "10.0.5.83",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "2385218e-dae2-4055-8af0-1dfe39d77caf",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.18.5",
+      "target": "10.0.5.49",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "26d8d671-e890-45c9-8302-beeec48d998c",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.18.7",
+      "target": "10.0.5.40",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "d5c5369e-d901-4ff9-894d-576bdb9a6828",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.10.21",
+      "target": "10.0.5.85",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ad3eac69-0727-4fc5-af47-8e47a4565d64",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.13.48",
+      "target": "10.0.5.48",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c53386da-42c1-40f3-8140-3f12c5fcefaa",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.19.41",
+      "target": "10.0.5.42",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c1ccbdf0-ff6e-4995-add5-677530f503ca",
+      "timestamp": "2026-02-06 13:22:12",
+      "type": "DDoS",
+      "source": "45.33.14.21",
+      "target": "10.0.5.13",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "afe2a708-450d-4711-8b3c-4666ab99b520",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.19.20",
+      "target": "10.0.5.12",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "961fd87e-d611-4720-8e7f-f3c403d1eebf",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.10.11",
+      "target": "10.0.5.18",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3d43482c-7976-4fd5-9038-cc500932d2c4",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.10.3",
+      "target": "10.0.5.87",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7f8a608d-c488-4f3d-a9e7-f66178d478b0",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.14.15",
+      "target": "10.0.5.54",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5a9939f0-b399-4f82-a59e-19c581ec4e99",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.13.22",
+      "target": "10.0.5.68",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "816ec0ac-b043-4c80-834f-6f86cc5a71a6",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.14.30",
+      "target": "10.0.5.67",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "189a9b6c-8bd5-4e53-a7b3-8776cb558575",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.13.24",
+      "target": "10.0.5.71",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "104bb8ff-06d7-471b-a0c8-41436b032520",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.15.27",
+      "target": "10.0.5.69",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f789fb80-8591-43cf-9b6e-1db0773bee41",
+      "timestamp": "2026-02-06 13:22:11",
+      "type": "DDoS",
+      "source": "45.33.13.18",
+      "target": "10.0.5.93",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3b48d4b9-8e3b-4d78-958a-6a5528498b66",
+      "timestamp": "2026-02-06 13:22:10",
+      "type": "DDoS",
+      "source": "45.33.14.32",
+      "target": "10.0.5.90",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e47b865e-1fe8-4c53-8868-8b68b40da59c",
+      "timestamp": "2026-02-06 13:22:09",
+      "type": "DDoS",
+      "source": "45.33.14.3",
+      "target": "10.0.5.86",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a1e94988-9444-4236-83d7-52b719a21954",
+      "timestamp": "2026-02-06 13:22:07",
+      "type": "DDoS",
+      "source": "45.33.11.35",
+      "target": "10.0.5.56",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7947d860-5e7b-4715-947c-14db2617e5c7",
+      "timestamp": "2026-02-06 13:21:14",
+      "type": "DDoS",
+      "source": "45.33.12.44",
+      "target": "10.0.5.39",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "87274a88-acdc-4a9a-a98a-ab410bbeda8d",
+      "timestamp": "2026-02-06 13:21:14",
+      "type": "DDoS",
+      "source": "45.33.13.14",
+      "target": "10.0.5.40",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b40d1a47-4d48-46cd-8c00-67e0f1a2d620",
+      "timestamp": "2026-02-06 13:21:14",
+      "type": "DDoS",
+      "source": "45.33.15.37",
+      "target": "10.0.5.17",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "fa10e2c3-f4d0-4f3f-b8bb-530dbb5fa5b4",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.17.25",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b9d4660c-7831-4b43-91e0-c469639e7fb9",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.13.21",
+      "target": "10.0.5.90",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cb28716c-c877-476d-bac2-ea89afde8c02",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.12.2",
+      "target": "10.0.5.13",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f56f1013-1688-46cd-b228-a00a52e758c9",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.15.22",
+      "target": "10.0.5.22",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6f545fcb-9242-4ad1-89b0-bc700f5c7a4d",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.10.39",
+      "target": "10.0.5.61",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "36aea0ec-bdd9-41fa-84b8-84d0d98e5dad",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.13.16",
+      "target": "10.0.5.64",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cffec507-d786-4c11-8f70-8ae82093436a",
+      "timestamp": "2026-02-06 13:21:13",
+      "type": "DDoS",
+      "source": "45.33.19.7",
+      "target": "10.0.5.94",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "8c67d2ca-8498-474a-92c0-740eea74ff16",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.13.10",
+      "target": "10.0.5.70",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cf15274d-bd63-4493-b8db-d8575f5f35d4",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.15.45",
+      "target": "10.0.5.56",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7ac94443-0ee7-40cf-a298-5a4db08acafe",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.17.23",
+      "target": "10.0.5.13",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5c455fe4-a39c-48e2-9d36-1874f61fa35a",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.16.35",
+      "target": "10.0.5.31",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a0e8f8ae-5aa0-4743-b7b9-2f4f673c8b1f",
+      "timestamp": "2026-02-06 13:21:12",
+      "type": "DDoS",
+      "source": "45.33.14.6",
+      "target": "10.0.5.27",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "0752723f-6039-4cc2-9a3b-445b0954ad0b",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.11.17",
+      "target": "10.0.5.60",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1ee243c2-31fa-4a30-b6db-ba477cd86459",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.15.22",
+      "target": "10.0.5.92",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7780354f-e9cb-42e8-9402-ec2074711af2",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.10.34",
+      "target": "10.0.5.10",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3ecf080c-40b4-462b-a9ed-5988d895f780",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.11.42",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5d352b2e-3260-4c2d-9ba5-299bca7fd036",
+      "timestamp": "2026-02-06 13:21:11",
+      "type": "DDoS",
+      "source": "45.33.15.41",
+      "target": "10.0.5.99",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "3ed0f25f-b94e-4eb8-bf7e-738ba688fd49",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.12.10",
+      "target": "10.0.5.59",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "85680fd0-2731-4a15-9ffb-7082066389fd",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.10.4",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6d4c5857-c34a-4ea3-b986-0f80c17ddb57",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.13.47",
+      "target": "10.0.5.97",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "30c58791-e77e-482a-bd7e-428e0b900494",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.13.42",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e65d58d5-6dd5-46e4-a9ca-269e2ccfcd58",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.18.48",
+      "target": "10.0.5.11",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6d7c24ae-f811-4117-95f0-34bf6338076d",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.13.46",
+      "target": "10.0.5.52",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "064bd05e-18da-45b3-9431-78847d64bd13",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.19.32",
+      "target": "10.0.5.37",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e0418cf4-0171-44b9-ae29-bc70f78235bf",
+      "timestamp": "2026-02-06 13:17:57",
+      "type": "DDoS",
+      "source": "45.33.12.21",
+      "target": "10.0.5.65",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "7b15850b-7798-4e16-a513-9d212631c9d4",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.19.38",
+      "target": "10.0.5.35",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "44889493-d2cf-4655-b42f-d5f21f4e5314",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.12.38",
+      "target": "10.0.5.98",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c6546120-84cb-47ee-afbb-58e2b35cfb8c",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.17.35",
+      "target": "10.0.5.80",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "13279a4c-9210-4195-a90b-45efcf9ae83a",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.19.32",
+      "target": "10.0.5.86",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "815fc57c-5c95-47fe-b449-53048436e258",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.16.24",
+      "target": "10.0.5.50",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "80a7bb81-cb8d-43f5-803a-762dc84a0cc3",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.18.33",
+      "target": "10.0.5.65",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "29096c48-ea54-439a-95ac-908a0f5d99fd",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.18.20",
+      "target": "10.0.5.42",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "42a0d8c6-7929-41ab-b320-b7b8bdd537a9",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.12.44",
+      "target": "10.0.5.57",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "141429e9-1a9c-4946-a762-20630ad92816",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.10.14",
+      "target": "10.0.5.78",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c27482a5-03f4-4957-aead-5ae9e5443d95",
+      "timestamp": "2026-02-06 13:17:56",
+      "type": "DDoS",
+      "source": "45.33.12.1",
+      "target": "10.0.5.83",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "af753ba1-eaa6-473c-8c20-290b4450895c",
+      "timestamp": "2026-02-06 13:17:55",
+      "type": "DDoS",
+      "source": "45.33.18.46",
+      "target": "10.0.5.55",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "d5ae705f-80e8-4f64-9335-fda36883e3e8",
+      "timestamp": "2026-02-06 13:17:55",
+      "type": "DDoS",
+      "source": "45.33.12.15",
+      "target": "10.0.5.80",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ed01bef3-b190-4fac-a255-6b09ae7062bc",
+      "timestamp": "2026-02-06 13:17:16",
+      "type": "DDoS",
+      "source": "45.33.14.39",
+      "target": "10.0.5.35",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "aca15a21-2cc7-4467-9dc4-7f9f27a8cc8a",
+      "timestamp": "2026-02-06 13:17:16",
+      "type": "DDoS",
+      "source": "45.33.18.26",
+      "target": "10.0.5.47",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5db7ef10-f33a-4982-b85e-a5451fcca19b",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.17.43",
+      "target": "10.0.5.66",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "1acf93b6-9264-4e95-b162-b72e6c3a52fb",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.10.48",
+      "target": "10.0.5.91",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c2c92eb3-027c-4649-bde7-55866491d78c",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.12.14",
+      "target": "10.0.5.29",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b36d0815-7f65-49a7-a70e-af38aa040531",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.13.41",
+      "target": "10.0.5.69",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f1aa5e91-260b-4dd4-8229-d6ea589d6699",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.14.37",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "15063b7a-e8f8-43ca-8f58-5ead6c6b1337",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.12.37",
+      "target": "10.0.5.62",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e8ce82d4-5497-49fa-8be9-843d29a38424",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.16.28",
+      "target": "10.0.5.92",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "fd3cb7a2-1071-4060-b298-c6be505bfa12",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.19.25",
+      "target": "10.0.5.14",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5bc14708-f78c-4dbf-bcb2-b6e8ebc375e8",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.17.3",
+      "target": "10.0.5.10",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "039a06fa-a49a-4698-a97e-f2145b95579e",
+      "timestamp": "2026-02-06 13:17:15",
+      "type": "DDoS",
+      "source": "45.33.14.29",
+      "target": "10.0.5.18",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "26587e71-1112-4fcd-a6f0-a9eef6e3ed88",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.15.42",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "f4cbacc8-21c7-4fca-bcf4-ae8c92f724be",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.18.10",
+      "target": "10.0.5.38",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "03eea69c-3f02-40eb-917d-4554d4d352f7",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.15.48",
+      "target": "10.0.5.94",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "902c7251-0e93-45fe-9eb0-51b6e54bea51",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.17.30",
+      "target": "10.0.5.29",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "75406dad-81f8-476b-857b-48c838bffa63",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.11.4",
+      "target": "10.0.5.27",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e888c897-e00a-4f26-ab94-a05dd99832df",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.18.47",
+      "target": "10.0.5.29",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5d2a1e81-58fc-4f83-840d-c8721eafbd33",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.15.27",
+      "target": "10.0.5.68",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "59e628aa-614d-4dd8-93c1-7e18bab69952",
+      "timestamp": "2026-02-06 13:17:14",
+      "type": "DDoS",
+      "source": "45.33.19.1",
+      "target": "10.0.5.32",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "a8037ea7-e721-4956-ae8e-28f6f55130be",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.17.34",
+      "target": "10.0.5.63",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "115536c4-4953-4a14-a0fa-1d8cdb1f9bcf",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.17.9",
+      "target": "10.0.5.18",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "37be0a00-5a85-4ded-9309-c77716fd9366",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.10.38",
+      "target": "10.0.5.74",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "c1d20923-f845-4685-964e-32106ce5b911",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.19.14",
+      "target": "10.0.5.93",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "494bef8e-29f8-4048-a486-a06672e0eff2",
+      "timestamp": "2026-02-06 13:13:57",
+      "type": "DDoS",
+      "source": "45.33.11.40",
+      "target": "10.0.5.45",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "5b978b41-1edd-4aea-8127-9844176ea286",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.13.43",
+      "target": "10.0.5.35",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "91eac66f-2fbc-458c-9b3c-403c29833d25",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.14.46",
+      "target": "10.0.5.53",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "6d88a7c3-c2fa-4f88-acd5-4ab3b051c11a",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.19.37",
+      "target": "10.0.5.99",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "cb45f89d-595f-43b3-9307-a7ce96a858d7",
+      "timestamp": "2026-02-06 13:13:40",
+      "type": "DDoS",
+      "source": "45.33.11.3",
+      "target": "10.0.5.70",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "ec9c7328-6078-4807-af10-f5cf7c23e49e",
+      "timestamp": "2026-02-06 13:13:39",
+      "type": "DDoS",
+      "source": "45.33.15.40",
+      "target": "10.0.5.12",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "89b01f82-2546-4c88-b737-a3c4ec40320c",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.14.37",
+      "target": "10.0.5.15",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "edc48e0a-7edc-4a26-bc27-b7626f837baf",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.11.43",
+      "target": "10.0.5.54",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "25f6f738-da08-42e4-8664-5b1cffed6510",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.17.23",
+      "target": "10.0.5.99",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "e95ccf15-3f0f-4211-89e0-578db2278c26",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.10.5",
+      "target": "10.0.5.66",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    },
+    {
+      "id": "b08be506-1d4a-4cc8-913e-fdbd423262e6",
+      "timestamp": "2026-02-06 13:13:23",
+      "type": "DDoS",
+      "source": "45.33.16.32",
+      "target": "10.0.5.28",
+      "status": "Active",
+      "risk_score": 95.0,
+      "severity": "Critical"
+    }
+  ]
+}

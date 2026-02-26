@@ -164,6 +164,89 @@ class DataAccessLayer:
         except Exception as e:
             print(f"[Persistence] Write Failed: {e}")
 
+    def set_mode(self, mode: str) -> bool:
+        """Manually switches storage mode. 'local' or 'cloud'."""
+        if mode == 'local':
+            print("[System] Switching to Local Mode (Manual Override).")
+            self._is_local_mode = True
+            return True
+        elif mode == 'cloud':
+            print("[System] Attempting switch to Cloud Mode...")
+            return self.check_connection()
+        return False
+
+    def check_connection(self) -> bool:
+        """Attempts to reconnect to MongoDB if currently in local mode."""
+        if not self._is_local_mode:
+            return True
+
+        try:
+            # Re-attempt initialization logic
+            client = MongoClient(config.MONGO_URI, serverSelectionTimeoutMS=2000)
+            client.admin.command('ismaster')
+            
+            # If successful, restore state
+            self._mongo_client = client
+            self._db = self._mongo_client[config.DB_NAME]
+            self._collection = self._db[config.COLLECTION_NAME]
+            self._is_local_mode = False
+            print(f"[Persistence] Connection Restored! Connected to: {config.DB_NAME}")
+            return True
+        except Exception:
+            return False
+
+    def synchronize_state(self):
+        """Merges Local JSON data with MongoDB data (Bi-directional)."""
+        if self._is_local_mode:
+            print("[Resiliency] Cannot sync in local mode.")
+            return
+
+        print("[Resiliency] Starting Bi-Directional Sync...")
+        
+        # 1. Fetch State
+        local_data = self._read_local_data()
+        local_map = {item['id']: item for item in local_data if 'id' in item}
+        
+        try:
+            # Limit sync to last 1000 records to prevent OOM
+            cloud_cursor = self._collection.find({}, {"_id": 0}).sort('timestamp', DESCENDING).limit(1000)
+            cloud_data = list(cloud_cursor)
+            cloud_map = {item['id']: item for item in cloud_data if 'id' in item}
+        except Exception as e:
+            print(f"[Resiliency] Sync Failed - Cloud Error: {e}")
+            self._is_local_mode = True
+            return
+
+        # 2. Calculate Deltas
+        local_ids = set(local_map.keys())
+        cloud_ids = set(cloud_map.keys())
+
+        missing_in_cloud = local_ids - cloud_ids
+        missing_in_local = cloud_ids - local_ids
+
+        # 3. Push to Cloud (Local -> Cloud)
+        if missing_in_cloud:
+            to_push = [local_map[uid] for uid in missing_in_cloud]
+            print(f"[Resiliency] Pushing {len(to_push)} offline records to Cloud...")
+            try:
+                if to_push:
+                    self._collection.insert_many(to_push, ordered=False)
+            except Exception as e:
+                print(f"[Resiliency] Push Partial Error: {e}")
+
+        # 4. Pull to Local (Cloud -> Local)
+        if missing_in_local:
+            to_pull = [cloud_map[uid] for uid in missing_in_local]
+            print(f"[Resiliency] Pulling {len(to_pull)} records to Local Storage...")
+            
+            # Merge and Persist
+            combined_data = local_data + to_pull
+            # Sort by timestamp to be safe
+            combined_data.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+            self.update_fallback_cache(combined_data)
+        
+        print("[Resiliency] Sync Complete. Systems are consistent.")
+
 # Global Accessor
 db = DataAccessLayer()
 

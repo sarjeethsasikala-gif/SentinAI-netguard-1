@@ -15,13 +15,15 @@ from typing import Optional, List
 from pydantic import BaseModel
 
 # Configuration & Infrastructure
+# Configuration & Infrastructure
 from backend.core.config import config
 from backend.services.auth_service import auth_service
 from backend.core.database import db
+from backend.core.deps import get_current_user
+from fastapi import Depends
 
 # Business Logic Services
 from backend.services.threat_service import threat_service as incident_manager
-from backend.services.analytics_service import analytics_service as metric_pipeline
 from backend.services.analytics_service import analytics_service as metric_pipeline
 from backend.services.topology_service import topology_service
 from backend.services.reporting_service import reporting_service
@@ -50,9 +52,10 @@ app = FastAPI(
 )
 
 # Security Middleware (CORS)
+# Security Middleware (CORS)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://localhost:5174"],
+    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://192.168.56.40"], # Specific Frontend IP allowed
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -75,7 +78,7 @@ def authenticate_operator(creds: CredentialsDTO):
         raise HTTPException(status_code=401, detail="Authentication Failed: Invalid credentials")
     return {"access_token": token, "token_type": "bearer"}
 
-@app.post("/api/auth/change-password")
+@app.post("/api/auth/change-password", dependencies=[Depends(get_current_user)])
 def rotate_operator_credentials(req: PasswordChangeDTO):
     """Updates the credentials for the specified operator."""
     success = auth_service.change_password(req.username, req.old_password, req.new_password)
@@ -85,7 +88,7 @@ def rotate_operator_credentials(req: PasswordChangeDTO):
 
 
 # --- Incident Management Endpoints ---
-@app.get("/api/threats")
+@app.get("/api/threats", dependencies=[Depends(get_current_user)])
 def retrieve_incident_feed(status: Optional[str] = None, start_time: Optional[str] = None, end_time: Optional[str] = None):
     """
     Returns a stream of security incidents.
@@ -93,7 +96,7 @@ def retrieve_incident_feed(status: Optional[str] = None, start_time: Optional[st
     """
     return incident_manager.get_recent_threats(lifecycle_state=status, start_time=start_time, end_time=end_time)
 
-@app.post("/api/threats/{threat_id}/resolve")
+@app.post("/api/threats/{threat_id}/resolve", dependencies=[Depends(get_current_user)])
 def triage_incident(threat_id: str):
     """Transitions an incident to the 'Resolved' state."""
     result = incident_manager.resolve_threat(threat_id)
@@ -101,7 +104,7 @@ def triage_incident(threat_id: str):
         raise HTTPException(status_code=404, detail="Incident ID not found.")
     return result
 
-@app.post("/api/threats/{threat_id}/block")
+@app.post("/api/threats/{threat_id}/block", dependencies=[Depends(get_current_user)])
 def execute_mitigation(threat_id: str):
     """Triggers an automated block response against the source."""
     success = incident_manager.block_threat_source(threat_id)
@@ -110,37 +113,54 @@ def execute_mitigation(threat_id: str):
     raise HTTPException(status_code=500, detail="Mitigation execution failed.")
 
 
+# --- Telemetry Injection Endpoint (For Standalone Log Generator) ---
+from backend.run_live_detection import sentinel_service
+
+@app.post("/api/telemetry", dependencies=[]) # No Auth required for internal VM-to-VM comms (or use API Key later)
+def inject_telemetry(payload: List[dict]):
+    """
+    Receives a batch of telemetry records from the external Log Generator (VM1).
+    Passes them to the NetworkSentinel for analysis and persistence.
+    """
+    if not payload:
+        return {"status": "ignored", "count": 0}
+    
+    # Offload to Sentinel
+    sentinel_service.process_telemetry_batch(payload)
+    
+    return {"status": "processed", "count": len(payload)}
+
+
 # --- Analytics & Reporting Endpoints ---
-@app.get("/api/dashboard/summary")
+@app.get("/api/dashboard/summary", dependencies=[Depends(get_current_user)])
 def get_executive_summary():
     """Returns the aggregated intelligence definition for the main dashboard."""
     return metric_pipeline.get_dashboard_summary()
 
 # Specialized Micro-endpoints for granular UI components
-@app.get("/api/stats/attack-types")
+@app.get("/api/stats/attack-types", dependencies=[Depends(get_current_user)])
 def get_vector_distribution():
     return metric_pipeline.get_dashboard_summary()["attack_types"]
 
-@app.get("/api/stats/geo")
+@app.get("/api/stats/geo", dependencies=[Depends(get_current_user)])
 def get_geographic_distribution():
     return metric_pipeline.get_dashboard_summary()["geo_stats"]
 
-@app.get("/api/stats/risk-summary")
+@app.get("/api/stats/risk-summary", dependencies=[Depends(get_current_user)])
 def get_severity_distribution():
     return metric_pipeline.get_dashboard_summary()["risk_summary"]
 
-@app.get("/api/network/topology")
+@app.get("/api/network/topology", dependencies=[Depends(get_current_user)])
 def get_network_graph():
-    """Provides node-link data for network visualization."""
     """Provides node-link data for network visualization."""
     return topology_service.get_topology_status()
 
-@app.post("/api/reports/generate")
+@app.post("/api/reports/generate", dependencies=[Depends(get_current_user)])
 def generate_compliance_report(req: ReportRequestDTO):
     """Triggers generation of a daily security report."""
     return reporting_service.generate_report(req.date)
 
-@app.get("/api/reports/{date_str}")
+@app.get("/api/reports/{date_str}", dependencies=[Depends(get_current_user)])
 def get_compliance_report(date_str: str):
     """Retrieves a previously generated report."""
     report = reporting_service.get_report(date_str)
@@ -156,8 +176,30 @@ def system_health_check():
     return {
         "status": "online",
         "api_version": config.API_VERSION,
-        "mode": "production" if db.get_db() else "resiliency_fallback"
+        "mode": "production" if db.get_db() is not None else "resiliency_fallback"
     }
+
+class SystemModeDTO(BaseModel):
+    mode: str # 'local' or 'cloud'
+
+@app.get("/api/system/mode")
+def get_storage_mode():
+    """Returns the current storage operation mode."""
+    # Access the internal singleton status via the bridge
+    is_local = db.dal._is_local_mode
+    return {"mode": "local" if is_local else "cloud"}
+
+@app.post("/api/system/mode")
+def set_storage_mode(req: SystemModeDTO):
+    """Manually toggles the storage backend."""
+    if req.mode not in ['local', 'cloud']:
+        raise HTTPException(status_code=400, detail="Invalid mode. Use 'local' or 'cloud'.")
+    
+    success = db.dal.set_mode(req.mode)
+    if not success and req.mode == 'cloud':
+         raise HTTPException(status_code=503, detail="Cloud connection failed. Staying in Local mode.")
+    
+    return {"status": "updated", "mode": req.mode}
 
 
 # --- Artifact Retrieval Endpoints ---
@@ -223,5 +265,32 @@ async def internal_notify(payload: dict = Body(...)):
     await manager.broadcast(payload)
     return {"status": "broadcasted"}
 
+import asyncio
+
+async def monitor_database_health():
+    """
+    Background Task:
+    Monitors MongoDB connectivity. If running in Local Mode (Resiliency),
+    it attempts to reconnect. Upon success, triggers Bi-Directional Sync.
+    """
+    print("[System] Resiliency Monitor Started.")
+    while True:
+        await asyncio.sleep(30) # Check every 30 seconds
+        
+        # We access the internal layer directly using the bridge's attribute
+        if db.dal._is_local_mode:
+            try:
+                # Try to reconnect
+                is_connected = db.dal.check_connection()
+                if is_connected:
+                    # If we just reconnected, Sync data
+                    db.dal.synchronize_state()
+            except Exception as e:
+                print(f"[System] Resiliency Monitor Error: {e}")
+
+@app.on_event("startup")
+async def start_resiliency_monitor():
+    asyncio.create_task(monitor_database_health())
+
 if __name__ == "__main__":
-    uvicorn.run("backend.api_gateway:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("backend.api_gateway:app", host="0.0.0.0", port=8000, reload=config.DEBUG)
